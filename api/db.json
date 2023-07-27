@@ -16,10 +16,17 @@
     },
     {
       "id": 3,
-      "name": "Sponge Bob",
-      "occupation": "Lives under the sea",
-      "weapon": "Crabby Patty",
+      "name": "uyiuiui",
+      "occupation": "sasassss",
+      "weapon": "sasas",
       "cartoon": true
+    },
+    {
+      "name": "",
+      "occupation": "",
+      "weapon": "",
+      "cartoon": false,
+      "id": 4
     }
   ]
 }

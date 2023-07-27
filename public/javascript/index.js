@@ -45,17 +45,14 @@ window.addEventListener("load", () => {
 
         const oneCharacter = await charactersAPI.getCharacterById(characterId);
 
-        if (oneCharacter) {
-          renderCharacter(oneCharacter);
-        } else {
-          const notFoundMessage = document.createElement("p");
-          notFoundMessage.textContent = "Character not found in the database.";
-          document
-            .querySelector(".characters-container")
-            .appendChild(notFoundMessage);
-        }
+        renderCharacter(oneCharacter);
       } catch (error) {
         console.error("Error fetching one character:", error);
+        const notFoundMessage = document.createElement("p");
+        notFoundMessage.textContent = "Character not found in the database.";
+        document
+          .querySelector(".characters-container")
+          .appendChild(notFoundMessage);
       }
     });
 
@@ -102,16 +99,12 @@ window.addEventListener("load", () => {
       console.log(characterData);
 
       try {
-        const createCharacter = await charactersAPI.createCharacter(
-          characterData
-        );
+        await charactersAPI.createCharacter(characterData);
 
-        if (characterData) {
-          createCharacterButton.style.backgroundColor = "green";
-          const characters = await charactersAPI.getAllCharacters();
-        }
+        createCharacterButton.style.backgroundColor = "green";
       } catch (error) {
         console.error("Error creating character:", error);
+        createCharacterButton.style.backgroundColor = "red";
       }
     });
 
@@ -123,10 +116,11 @@ window.addEventListener("load", () => {
       const updateCharacterForm = document.getElementById(
         "edit-character-form"
       );
-      const updateCharacterButton = document.getElementById("send-data");
+      const updateCharacterButton = document.getElementById("update-data");
 
       const formData = new FormData(updateCharacterForm);
       const characterData = {
+        id: formData.get("chr-id"),
         name: formData.get("name"),
         occupation: formData.get("occupation"),
         weapon: formData.get("weapon"),
@@ -135,12 +129,8 @@ window.addEventListener("load", () => {
       console.log(characterData);
 
       try {
-        const updateCharacter = await charactersAPI.editCharacterById(
-          characterData
-        );
-        if (updateCharacter) {
-          updateCharacterButton.style.backgroundColor = "green";
-        }
+        await charactersAPI.editCharacterById(characterData.id, characterData);
+        updateCharacterButton.style.backgroundColor = "green";
       } catch (error) {
         updateCharacterButton.style.backgroundColor = "red";
         console.error("Error updating character:", error);
